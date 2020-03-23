@@ -47,14 +47,10 @@ if BUNDLED_OSL
 endif
 
 AUTOMAKE_OPTIONS = subdir-objects
-SUBDIRS = $(MAYBE_ISL) $(MAYBE_OSL) . doc test
-DIST_SUBDIRS = $(MAYBE_ISL) $(MAYBE_OSL) . doc test
+SUBDIRS = $(MAYBE_ISL) $(MAYBE_OSL) .
+DIST_SUBDIRS = $(MAYBE_ISL) $(MAYBE_OSL) .
 
 ACLOCAL_AMFLAGS = -I m4
-
-FORCE:
-isl/libisl.la: FORCE
-	cd isl; $(MAKE) $(AM_MAKEFLAGS) libisl.la
 
 if NO_ISL
 CLOOG =
@@ -143,8 +139,6 @@ EXTRA_DIST = \
 	autoconf/Doxyfile.in \
 	source/matrix/constraintset.c \
 	cmake \
-	doc/cloog.texi \
-	doc/images \
 	examples
 
 install-data-local:
@@ -161,16 +155,11 @@ uninstall-local:
 	rm -f "$(DESTDIR)$(libdir)/$(PACKAGE_NAME)/cloog-isl-config.cmake"
 
 dist-hook:
-	rm -f $(distdir)/test/Makefile
 	$(top_builddir)/genversion.sh > $(distdir)/CLOOG_HEAD
-	(cd doc; make cloog.pdf) && cp doc/cloog.pdf $(distdir)/doc/
 
 #/*****************************************************************************
 # *                                   Rules                                   *
 # *****************************************************************************/
-
-valcheck:
-	$(MAKE) test_valgrind -C test
 
 total:
 	@echo "             /*-----------------------------------------------*"
@@ -181,8 +170,3 @@ total:
 	$(MAKE)
 	$(MAKE) install
 
-doc:
-	@echo "             /*-----------------------------------------------*"
-	@echo "              *        Generating CLooG's documentation       *"
-	@echo "              *-----------------------------------------------*/"
-	doxygen ./autoconf/Doxyfile

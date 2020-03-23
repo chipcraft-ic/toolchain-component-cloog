@@ -71,8 +71,6 @@ AC_CHECK_PROG(CD, cd)
 dnl Configure needs an empty install.sh file with this, i HATE that...
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
-AC_CHECK_PROG(TEXI2DVI, texi2dvi, texi2dvi, [])
-AM_CONDITIONAL(HAVE_TEXI2DVI, test -n "$TEXI2DVI")
 
 AX_CC_MAXOPT
 AC_SUBST(CFLAGS_WARN)
@@ -231,16 +229,13 @@ PACKAGE_NAME="cloog-isl"
 PACKAGE_CFLAGS="-DCLOOG_INT_GMP=1"
 AX_CREATE_PKGCONFIG_INFO
 
-AC_CONFIG_FILES(Makefile test/Makefile)
+AC_CONFIG_FILES(Makefile)
 AC_CONFIG_FILES(autoconf/Doxyfile)
-AC_CONFIG_FILES(doc/Makefile)
 AC_CONFIG_FILES(source/version.c)
 AC_CONFIG_FILES(include/cloog/version.h)
 AC_CONFIG_FILES([genversion.sh], [chmod +x genversion.sh])
 AC_CONFIG_COMMANDS([version.h],
 	[echo '#define CLOOG_HEAD "'`./genversion.sh`'"' > version.h])
-AC_CONFIG_COMMANDS([doc/gitversion.texi],
-	[echo '@set VERSION '`./genversion.sh`'' > doc/gitversion.texi])
 if test $with_isl = bundled; then
 	AC_CONFIG_SUBDIRS(isl)
 fi
