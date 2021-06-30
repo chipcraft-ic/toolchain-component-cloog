@@ -289,8 +289,6 @@ AC_CONFIG_FILES(include/cloog/version.h)
 AC_CONFIG_FILES([genversion.sh], [chmod +x genversion.sh])
 AC_CONFIG_COMMANDS([version.h],
 	[echo '#define CLOOG_HEAD "'`./genversion.sh`'"' > version.h])
-AC_CONFIG_COMMANDS([doc/gitversion.texi],
-	[echo '@set VERSION '`./genversion.sh`'' > doc/gitversion.texi])
 if test $with_isl = bundled; then
 	AC_CONFIG_SUBDIRS(isl)
 fi
